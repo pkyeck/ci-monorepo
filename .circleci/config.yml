@@ -40,7 +40,7 @@ jobs:
     working_directory: ~/project/<< parameters.package_name >>
 
     steps:
-      - checkout
+      - checkout:
           path: ~/project
       - run: pwd
       - run: ls -lisa
