@@ -31,6 +31,37 @@ jobs:
           name: Trigger workflows
           command: chmod +x ./.scripts/circle_trigger.sh && ./.scripts/circle_trigger.sh
 
+  test_api:
+    parameters:
+      package_name:
+        type: string
+    
+    executor: node
+    working_directory: ~/project/<< parameters.package_name >>
+
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run: yarn install --frozen-lockfile
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: run unit tests
+          command: yarn jest -- --ci --reporters="jest-junit" --coverage
+          environment:
+            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
+
   build:
     parameters:
       package_name:
@@ -91,14 +122,9 @@ workflows:
   api:
     when: << pipeline.parameters.api >>
     jobs:
-      - build:
+      - test_api:
           name: api-build
           package_name: api
-      - deploy:
-          name: api-deploy
-          package_name: api
-          requires:
-            - api-build
 
   app:
     when: << pipeline.parameters.app >>
