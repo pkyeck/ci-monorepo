@@ -103,6 +103,7 @@ jobs:
           working_directory: ../
       - run: echo "something changed - run tests"
       - run: pwd
+      - run: exit 1
 
 
 workflows:
