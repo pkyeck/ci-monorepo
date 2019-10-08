@@ -7,4 +7,9 @@ describe('index', () => {
     const result = index(4, 2);
     expect(result).toBe(6);
   });
+  
+  test('4 + -2', () => {
+    const result = index(4, -2);
+    expect(result).toBe(2);
+  });
 });
