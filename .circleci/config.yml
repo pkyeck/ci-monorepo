@@ -41,6 +41,9 @@ jobs:
 
     steps:
       - checkout
+          path: ~/project
+      - run: pwd
+      - run: ls -lisa
       # Download and cache dependencies
       - restore_cache:
           keys:
