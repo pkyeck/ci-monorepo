@@ -57,7 +57,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: run unit tests
-          command: yarn jest -- --ci --reporters="jest-junit" --coverage
+          command: yarn jest --ci --reporters="jest-junit" --coverage
           environment:
             JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
       - store_test_results:
