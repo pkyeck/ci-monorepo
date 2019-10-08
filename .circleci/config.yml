@@ -65,7 +65,8 @@ jobs:
         type: string
         default: origin/master
     
-    executor: node
+    docker: # run the steps with Docker
+      - image: circleci/node:10.16.3
     working_directory: ~/project/<< parameters.package_name >>
 
     steps:
@@ -87,7 +88,8 @@ jobs:
         type: string
         default: origin/master
     
-    executor: node
+    docker: # run the steps with Docker
+      - image: circleci/node:10.16.3
     working_directory: ~/project/<< parameters.package_name >>
 
     steps:
