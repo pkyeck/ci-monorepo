@@ -14,6 +14,7 @@ jobs:
       - checkout:
           path: ~/project
       # - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > /home/circleci/.npmrc
+      - run: npm i --package-lock-only
       - run: npm audit
 
   # API job ###################################################################
